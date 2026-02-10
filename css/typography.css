@@ -1,0 +1,24 @@
+/* typography.css - Titles, pre, etc. */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Josefin Sans', Arial, Helvetica, sans-serif;
+    margin: 0 0 20px 0;
+    font-weight: 300;
+    color: #dcdcdc;
+}
+h1 { font-size: 60px; }
+h2 { font-size: 45px; }
+
+pre {
+    border-style: solid;
+    border-width: 1px;
+    overflow: auto;
+    padding: 1em;
+    line-height: 1.5;
+    font-size: 16px;
+    background-color: #0a0a0a;
+    border-color: #333;
+    color: #00ff41;
+    font-family: "telesysregular", "Courier New", monospace;
+    margin-bottom: 30px;
+}

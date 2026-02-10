@@ -1,0 +1,31 @@
+/* base.css - Reset, Font, Body, Basic Elements */
+
+@font-face {
+    font-family: "Josefin Sans";
+    font-display: swap;
+    src: local('Josefin Sans'), url('https://fonts.gstatic.com/s/josefinsans/v25/Qw3PZQNVED7rKGk33r255Jy15T9u.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face { font-family: 'liberation_sansregular'; src: local('Arial'); }
+@font-face { font-family: 'telesysregular'; src: local('Courier New'); }
+@font-face { font-family: 'playfair_displayregular'; src: local('Georgia'); }
+
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+    font-family: 'liberation_sansregular', Arial, Helvetica, sans-serif;
+    background-color: #050505;
+    background-image: linear-gradient(to bottom, #1a1a1a, #000000);
+    background-attachment: fixed;
+    color: #3a3a3a;
+    margin: 0;
+    padding: 0;
+}
+
+a { color: #f40a0a; transition: color 0.1s ease-in-out; text-decoration: none; }
+a:visited { color: #790101; }
+a:hover, a:focus, a:active { color: #feaeae; }
+img { height: auto; max-width: 100%; }

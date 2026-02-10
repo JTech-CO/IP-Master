@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Master</title>
+    <!-- GitHub Pages Static Hosting Relative Path -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+    
+    <!-- Matrix Effect Canvas -->
+    <canvas id="matrix-overlay"></canvas>
+
+    <header class="inside-header">
+        <h1>IP MASTER</h1>
+        <p style="color: #999; font-family: 'Josefin Sans';">Advanced Network Analysis Tools</p>
+    </header>
+
+    <nav class="main-navigation">
+        <div class="main-nav">
+            <ul>
+                <li class="active"><a onclick="openTab('cidr')">CIDR 계산기</a></li>
+                <li><a onclick="openTab('ipv6conv')">IPv4 to IPv6</a></li>
+                <li><a onclick="openTab('dns')">도메인 변환</a></li>
+                <li><a onclick="openTab('geoip')">IP 위치</a></li>
+                <li><a onclick="openTab('mac')">MAC 조회</a></li>
+                <li><a onclick="openTab('encoder')">인코더/디코더</a></li>
+                <li><a onclick="openTab('ua')">User Agent</a></li>
+                <li><a onclick="openTab('subnet')">서브넷 표</a></li>
+                <li><a onclick="openTab('passwd')">암호 생성기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="grid-container">
+        
+        <!-- 1. CIDR Calculator -->
+        <div id="cidr" class="content-box tab-content active">
+            <h2>CIDR Calculator</h2>
+            <p>IPv4 및 IPv6 CIDR 주소를 기반으로 IP 범위를 계산합니다.</p>
+            
+            <div class="input-group">
+                <label>IP 주소 (예: 192.168.1.1 or 2001:db8::)</label>
+                <input type="text" id="cidr-ip" placeholder="IP Address 입력">
+            </div>
+            <div class="input-group">
+                <label>Prefix Length (CIDR)</label>
+                <input type="text" id="cidr-mask" placeholder="예: 24 (IPv4) 또는 64 (IPv6)">
+            </div>
+            <button onclick="calculateCIDR()">계산하기</button>
+
+            <br><br>
+            <h3>Result</h3>
+            <pre id="cidr-result">결과가 여기에 표시됩니다...</pre>
+        </div>
+
+        <!-- 2. IPv4 to IPv6 Converter -->
+        <div id="ipv6conv" class="content-box tab-content">
+            <h2>IPv4 to IPv6 Converter</h2>
+            <p>IPv4 주소를 IPv6 매핑 표기법으로 변환합니다.</p>
+            
+            <div class="input-group">
+                <label>IPv4 주소</label>
+                <input type="text" id="conv-ip" placeholder="예: 192.168.0.1">
+            </div>
+            <button onclick="convertIP()">변환하기</button>
+
+            <br><br>
+            <h3>Result</h3>
+            <pre id="conv-result">결과가 여기에 표시됩니다...</pre>
+        </div>
+
+        <!-- 3. Domain IPv4 Converter -->
+        <div id="dns" class="content-box tab-content">
+            <h2>Domain to IP Converter</h2>
+            <p>도메인 이름을 입력하여 연결된 IPv4 주소를 조회합니다. (Google DNS API 사용)</p>
+            
+            <div class="input-group">
+                <label>도메인 이름</label>
+                <input type="text" id="dns-domain" placeholder="예: google.com">
+            </div>
+            <button onclick="lookupDNS()">조회하기</button>
+
+            <br><br>
+            <h3>Result</h3>
+            <pre id="dns-result">결과가 여기에 표시됩니다...</pre>
+        </div>
+
+        <!-- 4. IP Location Lookup -->
+        <div id="geoip" class="content-box tab-content">
+            <h2>IP Address Locator</h2>
+            <p>IP 주소의 지리적 위치, 국가, ISP 정보를 조회합니다.</p>
+            
+            <div class="input-group">
+                <label>IP 주소 (비워두면 내 IP 조회)</label>
+                <input type="text" id="geo-ip" placeholder="예: 8.8.8.8">
+            </div>
+            <button onclick="lookupGeoIP()">위치 찾기</button>
+
+            <br><br>
+            <h3>Result</h3>
+            <pre id="geo-result">결과가 여기에 표시됩니다...</pre>
+        </div>
+
+        <!-- 5. MAC Address Vendor Lookup -->
+        <div id="mac" class="content-box tab-content">
+            <h2>MAC Vendor Lookup</h2>
+            <p>MAC 주소(OUI)를 기반으로 제조사를 조회합니다.</p>
+            
+            <div class="input-group">
+                <label>MAC 주소 (예: 00:1A:2B:3C:4D:5E)</label>
+                <input type="text" id="mac-input" placeholder="00-11-22-33-44-55 or 00:11:22...">
+            </div>
+            <button onclick="lookupMAC()">조회하기</button>
+            <br><br>
+            <h3>Result</h3>
+            <pre id="mac-result">제조사 정보가 여기에 표시됩니다.</pre>
+        </div>
+
+        <!-- 6. Base64 / URL Encoder & Decoder -->
+        <div id="encoder" class="content-box tab-content">
+            <h2>Encoder & Decoder</h2>
+            <p>텍스트 데이터를 Base64 또는 URL 인코딩 형식으로 변환합니다.</p>
+            
+            <div class="input-group">
+                <label>Input Text</label>
+                <textarea id="encode-input" placeholder="텍스트를 입력하세요"></textarea>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <button onclick="processEncode('base64_enc')">Base64 Encode</button>
+                <button onclick="processEncode('base64_dec')">Base64 Decode</button>
+                <button onclick="processEncode('url_enc')">URL Encode</button>
+                <button onclick="processEncode('url_dec')">URL Decode</button>
+            </div>
+
+            <div class="input-group">
+                <label>Output Result</label>
+                <textarea id="encode-output" readonly placeholder="결과가 여기에 표시됩니다"></textarea>
+            </div>
+        </div>
+
+        <!-- 7. User Agent Analyzer -->
+        <div id="ua" class="content-box tab-content">
+            <h2>User Agent Analyzer</h2>
+            <p>현재 브라우저의 User Agent 정보를 분석합니다.</p>
+            
+            <button onclick="analyzeUA()">내 브라우저 정보 분석</button>
+            <br><br>
+            <div class="input-group">
+                <label>Raw User Agent String</label>
+                <textarea id="ua-raw" style="height: 60px;"></textarea>
+            </div>
+            <h3>Analysis Result</h3>
+            <pre id="ua-result">분석 결과가 여기에 표시됩니다.</pre>
+        </div>
+
+        <!-- 8. Subnet Mask Cheat Sheet -->
+        <div id="subnet" class="content-box tab-content">
+            <h2>Subnet Mask Cheat Sheet</h2>
+            <p>CIDR 표기법에 따른 넷마스크와 호스트 개수 참조표입니다.</p>
+            <div style="overflow-x: auto;">
+                <table class="cheat-sheet" id="subnet-table">
+                    <thead>
+                        <tr>
+                            <th>CIDR</th>
+                            <th>Subnet Mask</th>
+                            <th>Total IPs</th>
+                            <th>Wildcard Mask</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subnet-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 9. Secure Password Generator -->
+        <div id="passwd" class="content-box tab-content">
+            <h2>Secure Key Generator</h2>
+            <p>WPA 키나 보안 비밀번호로 사용할 수 있는 강력한 무작위 문자열을 생성합니다.</p>
+            
+            <div class="input-group">
+                <label>길이 (Length, 4~64)</label>
+                <!-- oninput and onchange events to automatically correct the range -->
+                <input type="number" id="pw-length" value="32" min="4" max="64" style="width: 100px;" oninput="checkInputLength(this)" onblur="fixInputLength(this)">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <!-- Toggle Button Group -->
+                <button type="button" id="btn-upper" class="toggle-btn active" onclick="toggleOption(this)">대문자 (A-Z)</button>
+                <button type="button" id="btn-lower" class="toggle-btn active" onclick="toggleOption(this)">소문자 (a-z)</button>
+                <button type="button" id="btn-num" class="toggle-btn active" onclick="toggleOption(this)">숫자 (0-9)</button>
+                <button type="button" id="btn-special" class="toggle-btn active" onclick="toggleOption(this)">특수문자 (!@#$)</button>
+            </div>
+
+            <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <label style="color: #fe4848; margin-bottom: 0;">개수 (1~10):</label>
+                <!-- Generated Count Input Field -->
+                <input type="number" id="pw-count" value="1" min="1" max="10" style="width: 80px; margin-bottom: 0;" oninput="checkInputCount(this)" onblur="fixInputCount(this)">
+                
+                <button onclick="generatePassword()" style="background-color: #ac2929; border: 1px solid #500; margin-left: 10px;">Generate Key</button>
+            </div>
+
+            <div class="input-group">
+                <label>Generated Keys</label>
+                <!-- Container for multiple keys -->
+                <div id="pw-result-container">
+                    <input type="text" placeholder="Keys will appear here" readonly style="color: #555;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer-widgets">
+        <div class="site-info">
+            &copy; 2026 IP Master Tools. <br>
+            <span style="font-size: 12px; color: #555;">All tools run client-side or use public APIs.</span>
+            <br><br>
+            <a href="https://jtech-co.github.io/my-website/MLP.html" id="dev-link" class="dev-link">Developer</a> <!-- GitHub Link -->
+        </div>
+    </footer>
+
+    <!-- Script Load Order (Relative) -->
+    <script src="js/tabs.js"></script>
+    <script src="js/cidr.js"></script>
+    <script src="js/ipv6conv.js"></script>
+    <script src="js/dns.js"></script>
+    <script src="js/geoip.js"></script>
+    <script src="js/mac.js"></script>
+    <script src="js/encoder.js"></script>
+    <script src="js/ua.js"></script>
+    <script src="js/subnet.js"></script>
+    <script src="js/password.js"></script>
+    <script src="js/matrix.js"></script>
+</body>
+</html>

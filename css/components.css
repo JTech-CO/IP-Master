@@ -1,0 +1,52 @@
+/* components.css - Toggle Button, Key Row, Copy Button */
+
+button.toggle-btn {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ac2929;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+button.toggle-btn.active {
+    border-color: #00ff41;
+    background-color: transparent;
+}
+button.toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.key-row {
+    position: relative;
+    margin-bottom: 10px;
+}
+.key-row input {
+    width: 100%;
+    margin-bottom: 0;
+    padding-right: 90px;
+}
+.copy-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    width: 80px;
+    background-color: #220000;
+    border: 1px solid #500;
+    color: #ddd;
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+.copy-btn:hover {
+    background-color: #500;
+    color: #fff;
+}

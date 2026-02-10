@@ -1,0 +1,24 @@
+/* tables.css - Subnet Cheat Sheet Table */
+
+table.cheat-sheet {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+    font-family: 'telesysregular', monospace;
+}
+table.cheat-sheet th, table.cheat-sheet td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: center;
+}
+table.cheat-sheet th {
+    background-color: #220000;
+    color: #ffcccc;
+}
+table.cheat-sheet tr:nth-child(even) {
+    background-color: #0a0a0a;
+}
+table.cheat-sheet tr:hover {
+    background-color: #1a0505;
+}

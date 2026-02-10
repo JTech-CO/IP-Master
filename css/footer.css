@@ -1,0 +1,9 @@
+/* footer.css - Footer Area */
+
+.footer-widgets {
+    background-color: #050000;
+    color: #c00000;
+    padding: 50px 20px;
+    text-align: center;
+    border-top: 1px solid #333;
+}
